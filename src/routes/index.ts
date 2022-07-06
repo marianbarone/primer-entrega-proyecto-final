@@ -1,7 +1,8 @@
+import * as express from "express";
 import {getProducts, addProducts, getById, updateProduct, deleteById} from '../controllers/products-controller'
 // import  {postCart, emptyCart, viewCart, addToCart, deleteProductCart} from '../controllers/cart-controller'
 import {request, response, Router} from 'express'
-const router = Router()
+let router = express.Router()
 
 //Auth Admin
 
@@ -31,4 +32,4 @@ router.delete('/products/:id',auth, deleteById )
 // router.post('/cart/:id/productos', addToCart)
 // router.delete('/cart/:id/productos/:id_prod', deleteProductCart)
 
-export {router} 
+export = router; 
