@@ -1,0 +1,12 @@
+[
+    {
+        "title": "object",
+		"price": 200,
+		"thumbnail": "asd",
+		"description": "asdxd",
+		"code": "1",
+		"timestamp": 1657029852387,
+		"stock": "20",
+		"id": 1
+    }
+]
