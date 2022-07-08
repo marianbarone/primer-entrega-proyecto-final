@@ -10,6 +10,7 @@ class dbController {
             fs.promises
               .writeFile(`./${this.fileName}`, ``)
               .then(() => console.log(`${this.fileName} created`));
+              console.log(this.fileName)
     }
 }
 
@@ -24,31 +25,27 @@ class dbController {
     public readonly readFile = async () => {
 
         try {
-            console.log('entre bb')
+            console.log('entre al try')
 
-            const hola = await fs.promises.readFile(this.fileName, 'utf8')
-            let jsonData = JSON.parse(hola)
-            // return (await fs.promises.readFile(this.fileName, 'utf8'))
-            //     ? JSON.parse(await fs.promises.readFile(this.fileName, 'utf8'))
-            //     : ([])
-            console.log('Hello', hola)
+            const data: any = await fs.promises.readFile(this.fileName, 'utf8')
+            let jsonData = JSON.parse(data)
+            console.log('Hello', data)
             console.log(jsonData)
             return jsonData
         } catch (err: any) {
             console.log(err)
-            //Si el archivo NO existe, entonces lo crea.
             // if (err.errno === -2) {
             //     try {
             //         await fs.promises.writeFile(this.fileName, JSON.stringify([]))
-            //         return [] as storedProduct[]
+            //         return []
             //     } catch (err: any) {
-            //         console.error('Could not create file in such directory. ', err)
+            //         console.error('No se pudo crear el archivo. ', err)
             //     }
             // } else {
-            //     console.log('Method readFile: ', err)
+            //     console.log('Error en el metodo: ', err)
 
             // }
-            // return [] as storedProduct[]
+            // return []
         }
     }
 }

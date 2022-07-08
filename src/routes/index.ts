@@ -1,22 +1,9 @@
 import * as express from "express";
 import productsController from '../controllers/products-controller'
 // import  {postCart, emptyCart, viewCart, addToCart, deleteProductCart} from '../controllers/cart-controller'
-import {request, response, Router} from 'express'
-let router = express.Router()
-
-//Auth Admin
-
-const auth = (request:any, response:any, next:any)=>{
-    const admin = true
-    if(admin) {return next()} 
-    else {
-        let mensajeError={
-            error : "-1",
-            descripcion: `ruta: ${request.url} método: ${request.method} no autorizado`
-        }
-        response.status(401).json(mensajeError)
-    }
-}
+import { Router } from "express";
+import auth from '../middlewares/role'
+const router = Router()
 
 //Products
 router.get('/products', productsController.getProducts)

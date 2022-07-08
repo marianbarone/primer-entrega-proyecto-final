@@ -7,14 +7,16 @@ class productsController {
 
     //GetProducts
 
-    public async getProducts() {
+    public async getProducts(response: any) {
         try {
             const data = await dbController.readFile()
-            console.log(data)
-            return data
+            console.log('try', data)
+            // return data
+            response.json(data);
+
         }
-        catch {
-            console.log('No existen productos')
+        catch (err: any) {
+            console.log('No existen productos', err)
         }
     } 
 
@@ -27,16 +29,22 @@ class productsController {
         
             if (data.length === 0) {
                 const id = 1
-                const {title, description, code, price, thumbnail, timestamp, stock} = req.body
+                const {title, description, code, price, thumbnail, stock} = req.body
                 console.log(req.body)
-                const product = data.push({ title, description, code, price, thumbnail, timestamp, stock, id })
-                res.json(product)
+                const timestamp = new Date().toLocaleString("es-AR")
+                const product = ({ title, description, code, price, thumbnail, stock })
+                data.push ({...product, id, timestamp})
+                await dbController.writeFile(data)
+
             } else if (data.length > 0) {
                 const newId = data[data.length - 1].id
                 const id = newId + 1
-                const { title, description, code, price, thumbnail, timestamp, stock } = req.body
-                const product = data.push({ title, description, code, price, thumbnail, timestamp, stock, id })
-                res.json(product)
+                const { title, description, code, price, thumbnail, stock } = req.body
+                const timestamp = new Date().toLocaleString("es-AR")
+                const product = ({ title, description, code, price, thumbnail, stock })
+                data.push ({...product, id, timestamp})
+
+                await dbController.writeFile(data)
             }
 
         } catch (err: any) {
@@ -80,8 +88,10 @@ class productsController {
             if (!isNaN(id)) {
                 const product = data.find(prod => prod.id == id);
                 const updatedProducts = data.filter(prod => prod.id !== id);
+                const timestamp = new Date().toLocaleString("es-AR")
+
                 if (product) {
-                    const { title, description, code, price, thumbnail, timestamp, stock } = req.body;
+                    const { title, description, code, price, thumbnail, stock } = req.body;
                     let productToUpdate = {
                         id,
                         title,
