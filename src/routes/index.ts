@@ -1,5 +1,5 @@
 import * as express from "express";
-import {getProducts, addProducts, getById, updateProduct, deleteById} from '../controllers/products-controller'
+import productsController from '../controllers/products-controller'
 // import  {postCart, emptyCart, viewCart, addToCart, deleteProductCart} from '../controllers/cart-controller'
 import {request, response, Router} from 'express'
 let router = express.Router()
@@ -19,11 +19,11 @@ const auth = (request:any, response:any, next:any)=>{
 }
 
 //Products
-router.get('/products', getProducts)
-router.get('/products/:id', getById)
-router.post('/products',auth, addProducts)
-router.put('/products/:id',auth, updateProduct)
-router.delete('/products/:id',auth, deleteById )
+router.get('/products', productsController.getProducts)
+router.get('/products/:id', productsController.getById)
+router.post('/products',auth, productsController.addProducts)
+router.put('/products/:id',auth, productsController.updateProduct)
+router.delete('/products/:id',auth, productsController.deleteById )
 
 //Cart
 // router.post('/cart', postCart) 
