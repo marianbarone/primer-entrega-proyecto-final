@@ -1,22 +1,33 @@
-import * as express from "express";
-import productsController from '../controllers/products-controller'
-// import  {postCart, emptyCart, viewCart, addToCart, deleteProductCart} from '../controllers/cart-controller'
+import {
+  getProducts,
+  addProducts,
+  getById,
+  updateProduct,
+  deleteById,
+} from "../controllers/products-controller";
+import {
+	createCart,
+	deleteCart,
+	getCartProducts,
+	addProductToCart,
+	deleteProductFromCart,
+} from '../controllers/cart-controller';
 import { Router } from "express";
-import auth from '../middlewares/role'
-const router = Router()
+import auth from "../middlewares/role";
+const router = Router();
 
 //Products
-router.get('/products', productsController.getProducts)
-router.get('/products/:id', productsController.getById)
-router.post('/products',auth, productsController.addProducts)
-router.put('/products/:id',auth, productsController.updateProduct)
-router.delete('/products/:id',auth, productsController.deleteById )
+router.get("/products", getProducts);
+router.get("/products/:id", getById);
+router.post("/products", auth, addProducts);
+router.put("/products/:id", auth, updateProduct);
+router.delete("/products/:id", auth, deleteById);
 
-//Cart
-// router.post('/cart', postCart) 
-// router.delete('/cart/:id', emptyCart )
-// router.get('/cart/:id/productos', viewCart)
-// router.post('/cart/:id/productos', addToCart)
-// router.delete('/cart/:id/productos/:id_prod', deleteProductCart)
+// Cart
+router.post('/cart', createCart)
+router.delete('/cart/:id', deleteCart )
+router.get('/cart/:id/products', getCartProducts)
+router.post('/cart/:id/products', addProductToCart)
+router.delete('/cart/:id/products/:id_prod', deleteProductFromCart)
 
-export = router; 
+export = router;

@@ -1,5 +1,6 @@
 
-export interface product {
+export interface Product {
+    id: number
     title: string
     code: string
     description: string
@@ -7,4 +8,4 @@ export interface product {
     price: number
     thumbnail: string
     stock: number
-  }
+}

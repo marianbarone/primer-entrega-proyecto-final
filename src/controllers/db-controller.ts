@@ -1,5 +1,5 @@
 import fs from 'fs'
-import { product } from '../interfaces/product'
+import { Product } from '../interfaces/product'
 
 class dbController {
     fileName: string
@@ -11,10 +11,10 @@ class dbController {
               .writeFile(`./${this.fileName}`, ``)
               .then(() => console.log(`${this.fileName} created`));
               console.log(this.fileName)
+        }   
     }
-}
 
-    public readonly writeFile = async (data: Array<product>) => {
+    public readonly writeFile = async (data: Array<Product>) => {
         try {
             await fs.promises.writeFile(this.fileName, JSON.stringify(data, null, 2))
         } catch (err: any) {
@@ -22,32 +22,47 @@ class dbController {
         }
     }
 
-    public readonly readFile = async () => {
-
+    async readFile ()  {
         try {
-            console.log('entre al try')
-
             const data: any = await fs.promises.readFile(this.fileName, 'utf8')
             let jsonData = JSON.parse(data)
-            console.log('Hello', data)
-            console.log(jsonData)
             return jsonData
         } catch (err: any) {
             console.log(err)
-            // if (err.errno === -2) {
-            //     try {
-            //         await fs.promises.writeFile(this.fileName, JSON.stringify([]))
-            //         return []
-            //     } catch (err: any) {
-            //         console.error('No se pudo crear el archivo. ', err)
-            //     }
-            // } else {
-            //     console.log('Error en el metodo: ', err)
-
-            // }
-            // return []
+            return []
         }
     }
+        
+    
+
+    // public readonly readProducts = async () => {
+	// 	try {
+	// 		let data: any = await fs.promises.readFile(
+	// 			'./src/data/products.json',
+	// 			'utf-8'
+	// 		)
+	// 		data = JSON.parse(data)
+
+	// 		return data
+	// 	} catch (error) {
+	// 		console.log(`Lo sentimos hubo un error ${error}`)
+	// 	}
+	// }
+
+    // public readonly readCarts = async () => {
+	// 	try {
+	// 		let data: any = await fs.promises.readFile(
+	// 			'./src/data/carts.json',
+	// 			'utf-8'
+	// 		)
+	// 		data = JSON.parse(data)
+
+	// 		return data
+	// 	} catch (error) {
+	// 		console.log(`Lo sentimos hubo un error ${error}`)
+	// 	}
+	// }
 }
 
-export default new dbController ('../primer-entrega-proyecto-final/src/db/products.txt');
+
+export default new dbController ('../primer-entrega-proyecto-final/src/db/products.json');

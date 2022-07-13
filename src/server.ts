@@ -2,9 +2,14 @@ import express from 'express'
 import router = require("./routes/index");
 import path from 'express'
 import {request, response} from 'express'
+import dotenv from 'dotenv'
+
+dotenv.config()
+const port = process.env.PORT
+
 const app = express()
 // const port = process.env.PORT||8080     
-const port = 8080
+// const port = 8080
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -21,18 +26,6 @@ const error404= (request:any, response:any,next:any)=>{
 } 
 //Ruta NO encontrada
 app.use(error404)
-
-// app.use((error, req, res) => {
-//     res.status(error.httpStatusCode).send(error)
-// })
-
-// app.listen((port: any) => {
-//     // if (error) {
-//     //     console.log(`Se produjo un error al iniciar el servidor ${error}`)
-//     // } else {
-//         console.log(`El servidor esta escuchando el puerto ${port}`)
-//     // }
-// })
 
 const server = app.listen(port, ()=> console.log(`Server listening on port: ${port}`));
 server.on("error", err => console.log(`Oh no! Something is broken on the server: ${err}`));
