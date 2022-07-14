@@ -1,22 +1,22 @@
 [
   {
-    "title": "object",
-    "price": 200,
-    "thumbnail": "asd",
+    "id": 1,
+    "title": "cambiado",
     "description": "asdxd",
     "code": "1",
-    "timestamp": 1657029852387,
-    "stock": "20",
-    "id": 1
+    "price": 200,
+    "thumbnail": "asd",
+    "timestamp": "13/7/2022 21:14:11",
+    "stock": "20"
   },
   {
-    "title": "object",
-    "price": 200,
-    "thumbnail": "asd",
+    "id": 3,
+    "title": "cambiado",
     "description": "asdxd",
     "code": "1",
-    "timestamp": 1657029852387,
-    "stock": "20",
-    "id": 2
+    "price": 200,
+    "thumbnail": "asd",
+    "timestamp": "13/7/2022 21:19:39",
+    "stock": "20"
   }
 ]

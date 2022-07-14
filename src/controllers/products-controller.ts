@@ -25,6 +25,7 @@ const addProducts = async (req: any, res: any) => {
       const product = { title, description, code, price, thumbnail, stock };
       data.push({ ...product, id, timestamp });
       await dbController.writeFile(data);
+      return data
     } else if (data.length > 0) {
       const newId = data[data.length - 1].id;
       const id = newId + 1;
@@ -34,6 +35,8 @@ const addProducts = async (req: any, res: any) => {
       data.push({ ...product, id, timestamp });
 
       await dbController.writeFile(data);
+      res.status(200).send("Producto agregado!");
+
     }
   } catch (err: any) {
     return "No se pudo agregar el producto";
@@ -70,24 +73,26 @@ const updateProduct = async (req: any, res: any) => {
   const id = Number(req.params.id);
   if (data.length > 0) {
     if (!isNaN(id)) {
-      const product = data.find((prod) => prod.id == id);
-      const updatedProducts = data.filter((prod) => prod.id !== id);
+      const product = data.find((prod: any) => prod.id == id);
+      const updatedProducts = data.filter((prod: any) => prod.id !== id);
       const timestamp = new Date().toLocaleString("es-AR");
 
       if (product) {
         const { title, description, code, price, thumbnail, stock } = req.body;
         let productToUpdate = {
-          id,
+          id:id,
           title,
           description,
           code,
           price: Number(price),
           thumbnail,
-          timestamp,
+          timestamp:timestamp,
           stock,
         };
 
         data = [...updatedProducts, productToUpdate];
+        await dbController.writeFile(data);
+
         res.status(200).send("Producto actualizado!");
       } else {
         res.status(404).json({ error: "Producto no encontrado" });
@@ -112,12 +117,14 @@ const deleteById = async (req: any, res: any) => {
         (product) => product.id != req.params.id
       );
       data = updatedProducts;
-      res.status(200).send("Película eliminada!");
+      await dbController.writeFile(data);
+
+      res.status(200).send("Producto eliminado!");
     } else {
       res.status(400).json({ error: "El ID debe ser un número" });
     }
   } else {
-    res.status(404).json({ error: "No existen películas" });
+    res.status(404).json({ error: "No existen productos" });
   }
 };
 
